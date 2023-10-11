@@ -24,18 +24,25 @@ export default function Home() {
     setKey("");
     setValue("");
     setExpiry(10000);
-  }
+  };
 
   useEffect(() => {
     refetchItems();
   }, []);
+
+  const handleAddItem = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    setItem(key, value, expiry);
+    refetchItems();
+    clearForm();
+  };
 
   return (
     <main className="container mx-auto p-8 md:p-24">
       <div className="flex flex-col gap-6">
         <h1 className="text-2xl font-bold">
           Local Storage with expiration time
-          
         </h1>
 
         <p className="text-lg font-semibold">
@@ -100,58 +107,57 @@ export default function Home() {
         />
 
         <hr></hr>
+        <form onSubmit={handleAddItem}>
+          <div className="flex flex-col md:flex-row items-center justify-center gap-4">
+            <label className="block text-white text-sm font-bold">Key</label>
+            <input
+              className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              type="text"
+              value={key}
+              onChange={(e) => setKey(e.target.value)}
+              placeholder="Enter Key"
+              tabIndex={1}
+              autoFocus
+              required
+            />
+            <label className="block text-white text-sm font-bold">Value</label>
+            <input
+              className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              type="text"
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+              placeholder="Enter Value"
+              tabIndex={2}
+              required
+            />
 
-        <div className="flex flex-col md:flex-row items-center justify-center gap-4">
-          <label className="block text-white text-sm font-bold">Key</label>
-          <input
-            className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            type="text"
-            value={key}
-            onChange={(e) => setKey(e.target.value)}
-            placeholder="Enter Key"
-            tabIndex={1}
-            autoFocus
-          />
-          <label className="block text-white text-sm font-bold">Value</label>
-          <input
-            className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            type="text"
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            placeholder="Enter Value"
-            tabIndex={2}
-          />
+            <label className="block text-white text-sm font-bold">
+              expiry In Milliseconds
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              type="tel"
+              autoComplete="off"
+              pattern="[0-9]*"
+              value={expiry}
+              onChange={(e) => {
+                if (validateNumber(e.target.value) === false) return;
 
-          <label className="block text-white text-sm font-bold">
-            expiry In Milliseconds
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            type="tel"
-            autoComplete="off"
-            pattern="[0-9]*"
-            value={expiry}
-            onChange={(e) => {
-              if (validateNumber(e.target.value) === false) return;
+                setExpiry(parseInt(e.target.value));
+              }}
+              placeholder="Enter Expiry In Milliseconds"
+              tabIndex={3}
+              required
+            />
 
-              setExpiry(parseInt(e.target.value));
-            }}
-            placeholder="Enter Expiry In Milliseconds"
-            tabIndex={3}
-          />
-
-          <input
-            type="button"
-            value="Set Key"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer"
-            onClick={() => {
-              setItem(key, value, expiry);
-              refetchItems();
-              clearForm();
-            }}
-            tabIndex={4}
-          />
-        </div>
+            <input
+              type="submit"
+              value="Set Key"
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer"
+              tabIndex={4}
+            />
+          </div>
+        </form>
       </div>
     </main>
   );
