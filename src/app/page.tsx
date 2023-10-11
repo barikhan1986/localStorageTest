@@ -35,6 +35,7 @@ export default function Home() {
       <div className="flex flex-col gap-6">
         <h1 className="text-2xl font-bold">
           Local Storage with expiration time
+          
         </h1>
 
         <p className="text-lg font-semibold">
@@ -144,7 +145,7 @@ export default function Home() {
             value="Set Key"
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer"
             onClick={() => {
-              setItem(key, value, 100);
+              setItem(key, value, expiry);
               refetchItems();
               clearForm();
             }}

@@ -39,20 +39,29 @@ const clear = () => {
 
 const getAllItems = () => {
   let items: LocalStorageItem[] = [];
-
+  const now = new Date().getTime();
   for (const key in localStorage) {
     if (localStorage.hasOwnProperty(key)) {
       const value = localStorage.getItem(key);
-     
+
       if (value) {
         const parsedValue = JSON.parse(value);
 
+        //check if expired and remove if it is
 
-        items.push({
-          key: key,
-          value: parsedValue.value,
-          expiryInMilliseconds: parsedValue.expiryInMilliseconds,
-        });
+        const expiryInMilliseconds = parsedValue.expiryInMilliseconds;
+
+
+        if (expiryInMilliseconds < now) {
+          removeItem(key);
+          continue;
+        } else {
+          items.push({
+            key: key,
+            value: parsedValue.value,
+            expiryInMilliseconds: expiryInMilliseconds,
+          });
+        }
       }
     }
   }
