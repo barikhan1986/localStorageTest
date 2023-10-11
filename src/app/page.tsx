@@ -17,7 +17,6 @@ export default function Home() {
   const [allItems, setAllItems] = useState<LocalStorageItem[]>([]);
 
   const refetchItems = () => {
-    console.log(getAllItems());
     setAllItems(getAllItems());
   };
 

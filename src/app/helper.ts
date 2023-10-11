@@ -43,11 +43,10 @@ const getAllItems = () => {
   for (const key in localStorage) {
     if (localStorage.hasOwnProperty(key)) {
       const value = localStorage.getItem(key);
-      console.log(value);
+     
       if (value) {
         const parsedValue = JSON.parse(value);
 
-        console.log(parsedValue);
 
         items.push({
           key: key,
