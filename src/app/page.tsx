@@ -21,6 +21,12 @@ export default function Home() {
     setAllItems(getAllItems());
   };
 
+  const clearForm = () => {
+    setKey("");
+    setValue("");
+    setExpiry(10000);
+  }
+
   useEffect(() => {
     refetchItems();
   }, []);
@@ -141,6 +147,7 @@ export default function Home() {
             onClick={() => {
               setItem(key, value, 100);
               refetchItems();
+              clearForm();
             }}
             tabIndex={4}
           />
